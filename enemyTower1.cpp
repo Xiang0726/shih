@@ -21,7 +21,7 @@ enemyTower1::enemyTower1(QGraphicsItem *parent): QObject(),  QGraphicsPixmapItem
            << QPointF (1,3) << QPointF (0,2) << QPointF (0,1);
 
     //scale
-      int scale = 150;
+      int scale = 50;
       for(size_t a=0,n=points.size();a<n;a++){
           points[a] = points[a] * scale;
       }
@@ -95,4 +95,21 @@ void enemyTower1::acquire_target(){
    }
   attack_dest = closest_point ;
   attack_target();
+
+  for(size_t a =0,n=colliding_items.size(); a<n; a++){
+
+      Minion1 * minion1 = dynamic_cast<Minion1 *>(colliding_items[a]);
+
+      if(minion1){
+          double this_list =distance_to(minion1);
+          if(this_list < closest_dist){
+              closest_dist = this_list;
+              closest_point = colliding_items[a]->pos();
+              target_exist = true;
+          }
+
+      }
+ }
+attack_dest = closest_point ;
+attack_target();
 }
